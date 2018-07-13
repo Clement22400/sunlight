@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const bot = new Discord.Client()
 var prefix = '!'
 const speak = new Set();
-bot.login(process.env.TOKEN)
+bot.login(process.env.TOKENd)
 bot.on('ready', function() {
 console.log('Je suis prêt ! #SunLight')
 bot.user.setActivity('!help | SunLight')
