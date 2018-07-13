@@ -2,7 +2,8 @@ const Discord = require('discord.js')
 const bot = new Discord.Client()
 var prefix = '!'
 const speak = new Set();
-bot.login(process.env.TOKENd)
+const kickspeak = new Set();
+bot.login(process.env.TOKEN)
 bot.on('ready', function() {
 console.log('Je suis prêt ! #SunLight')
 bot.user.setActivity('!help | SunLight')
@@ -18,21 +19,50 @@ bot.on('guildMemberRemove', function (member) {
     member.guild.channels.find(c=>c.name.includes('bienvenue')).send(`Au revoir ${member.displayName} sur le serveur de la SunLight.`);
 });
 bot.on('message', async message =>{
+  function fkick() {
+    message.author.send('Vous avez été expulsé pour spam sur le serveur **SunLight**, voici le lien pour revenir : https://discord.gg/tCJZv2h !')
+    message.member.kick('Auto KICK Raison : Spam')
+  }
   if (message.author.bot) return;
   if (speak.has(message.author.id)) {
-    message.delete()
+    if (!message.member.hasPermission('MANAGE_MESSAGES')) {
+      message.delete()
     message.channel.send('Merci de ne pas spam ! 2 secondes entre chaque message.').then((message)=>{
       setTimeout(()=>{
         message.delete()
-      }, 1000)
+      }, 2000)
+      if (kickspeak.has(message.author.id)) {
+        fkick()
+      } else {
+        kickspeak.add(message.author.id)
+        setTimeout(()=>{
+          kickspeak.delete(message.author.id)
+        }, 2000)
+      }
     })
+    }
   } else {
-    speak.add(message.author.id)
+    if (!message.member.hasPermission('MANAGE_MESSAGES')) {
+      speak.add(message.author.id)
     setTimeout(()=>{
       speak.delete(message.author.id)
     }, 2000)
+    }
   }
-if (message.author.bot) return;
+if (message.content.includes('https://discord.gg/')) {
+  if (message.channel.id === '467241067800952832') return;
+  message.delete()
+  message.reply('Les invitation discord sont autorisé seulement dans <#467241067800952832> !').then((message)=>{
+    setTimeout(()=>{
+      message.delete()
+    }, 3000)
+  })
+}
+if (message.mentions.users.size >= 4) {
+  if (message.member.hasPermission('MANAGE_MESSAGES')) return;
+  message.delete()
+  message.reply('Merci de ne pas mentionner plus de 4 personnes dans votre message.')
+}
 if (message.channel.type === 'dm') return message.channel.send(':x: **Seulement le staff à accès au bot.**')
 if (message.content === prefix + 'help') {
     if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(':x: **Seulement le staff à accès au bot.**')
