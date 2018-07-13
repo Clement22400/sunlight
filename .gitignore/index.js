@@ -19,8 +19,8 @@ bot.on('guildMemberRemove', function (member) {
 bot.on('message', async message =>{
 if (message.author.bot) return;
 if (message.channel.type === 'dm') return message.channel.send(':x: **Seulement le staff à accès au bot.**')
-if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(':x: **Seulement le staff à accès au bot.**')
 if (message.content === prefix + 'help') {
+    if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(':x: **Seulement le staff à accès au bot.**')
     let helpEmbed = new Discord.RichEmbed()
     .setTitle('__**Help**__')
     .setDescription('Help du bot SunLight')
@@ -50,7 +50,7 @@ if (message.content === prefix + 'help') {
         message.channel.bulkDelete(fetched)
       }
     if (message.content.startsWith(prefix + 'kick')) {
-        if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(noperm)
+        if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(':x: **Seulement le staff à accès au bot.**')
         if (!mUser) return message.channel.send('Choisir une personne ! !kick <@pseudo> <raison>')
         if (mUser.hasPermission('MANAGE_MESSAGES')) return message.channel.send('Cette personne ne peux pas être kick !')
         if (!raison) return message.channel.send('Choisir une raison ! !kick <@pseudo> <raison>')
@@ -64,7 +64,7 @@ if (message.content === prefix + 'help') {
         return message.channel.send(kickEmbed)
     }
     if (message.content.startsWith(prefix + 'ban')) {
-        if (!message.member.hasPermission('BAN_MEMBERS')) return message.channel.send(noperm)
+        if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(':x: **Seulement le staff à accès au bot.**')
         if (!mUser) return message.channel.send('Choisir une personne ! !ban <@pseudo> <raison>')
         if (mUser.hasPermission('MANAGE_MESSAGES')) return message.channel.send('Cette personne ne peux pas être ban !')
         if (!raison) return message.channel.send('Choisir une raison ! !ban <@pseudo> <raison>')
@@ -78,9 +78,9 @@ if (message.content === prefix + 'help') {
         return message.channel.send(kickEmbed)
     }
     if (message.content.startsWith( prefix + 'mute')) {
+        if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(':x: **Seulement le staff à accès au bot.**')
         let role = message.guild.roles.find(r => r.name === "Muted");
         let toMute = message.guild.member(message.mentions.users.first())
-        if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(noperm)
         if(!role){
             try {
               role = await message.guild.createRole({
@@ -106,9 +106,9 @@ if (message.content === prefix + 'help') {
         return message.channel.send(`${toMute} est désormais muté !`)
     }
     if (message.content.startsWith( prefix + 'unmute')) {
+        if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(':x: **Seulement le staff à accès au bot.**')
         let role = message.guild.roles.find(r => r.name === "Muted");
         let toMute = message.guild.member(message.mentions.users.first())
-        if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(noperm)
         if(!role){
             try {
               role = await message.guild.createRole({
@@ -134,7 +134,7 @@ if (message.content === prefix + 'help') {
         return message.channel.send(`${toMute} est désormais unmuté !`)
     }
     if (message.content.startsWith(prefix + 'addrole')) {
-        if (!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send(noperm)
+        if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(':x: **Seulement le staff à accès au bot.**')
         let role = args.join(' ').slice(31)
         let grole = message.guild.roles.find('name', role)
         if (!mUser) return message.channel.send('Choisir une personne ! !addrole <@pseudo> <role>')
@@ -145,7 +145,7 @@ if (message.content === prefix + 'help') {
         mUser.addRole(grole.id)
     }
     if (message.content.startsWith(prefix + 'removerole')) {
-        if (!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send(noperm)
+        if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send(':x: **Seulement le staff à accès au bot.**')
         let role = args.join(' ').slice(34)
         let grole = message.guild.roles.find('name', role)
         if (!mUser) return message.channel.send('Choisir une personne ! !addrole <@pseudo> <role>')
