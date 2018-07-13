@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const bot = new Discord.Client()
 var prefix = '!'
+const speak = new Set();
 bot.login(process.env.TOKEN)
 bot.on('ready', function() {
 console.log('Je suis prêt ! #SunLight')
@@ -17,6 +18,20 @@ bot.on('guildMemberRemove', function (member) {
     member.guild.channels.find(c=>c.name.includes('bienvenue')).send(`Au revoir ${member.displayName} sur le serveur de la SunLight.`);
 });
 bot.on('message', async message =>{
+  if (message.author.bot) return;
+  if (speak.has(message.author.id)) {
+    message.delete()
+    message.channel.send('Merci de ne pas spam ! 2 secondes entre chaque message.').then((message)=>{
+      setTimeout(()=>{
+        message.delete()
+      }, 1000)
+    })
+  } else {
+    speak.add(message.author.id)
+    setTimeout(()=>{
+      speak.delete(message.author.id)
+    }, 2000)
+  }
 if (message.author.bot) return;
 if (message.channel.type === 'dm') return message.channel.send(':x: **Seulement le staff à accès au bot.**')
 if (message.content === prefix + 'help') {
