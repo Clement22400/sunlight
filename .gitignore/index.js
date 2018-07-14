@@ -246,7 +246,7 @@ bot.on('raw', async event => {
   bot.emit(events[event.t], reaction, user);
 });
 bot.on('messageReactionAdd', async (reaction, user)=>{
-    if (reaction.message.content.startsWith('[NOTIF]')) {
+    if (reaction.message.id === '467719049254797313') {
     if (reaction.message.member.hasPermission('ADMINISTRATOR')) {
       reaction.message.react('🔔')
       if (reaction.emoji.name === '🔔') {
@@ -259,7 +259,7 @@ bot.on('messageReactionAdd', async (reaction, user)=>{
     }
 });
 bot.on('messageReactionRemove', async (reaction, user)=>{
-  if (reaction.message.content.startsWith('[NOTIF]')) {
+  if (reaction.message.id === '467719049254797313') {
     if (reaction.message.member.hasPermission('ADMINISTRATOR')) {
       if (reaction.emoji.name === '🔔') {
         reaction.message.guild.members.get(user.id).removeRole('467712226837528577')
