@@ -76,11 +76,25 @@ if (message.content === prefix + 'help') {
     .addField('!unmute <@pseudo>', 'Unmuter une personne du serveur.')
     .addField('!addrole <@pseudo> <nom du role>', 'Ajouter un role à une personne.')
     .addField('!removerole <@pseudo> <nom du role>', 'Enlever un role à une personne.')
+    .addField('!membercount', 'Calculer le nombre de membre dans le discord et dans la team.')
     .setFooter('#SunLight')
     message.author.send(helpEmbed).catch(e=> {
         return message.channel.send(":x: Je ne peux pas vous envoyez l'aide ! Activez les messages venant des utilisateurs non amis")
     })
     message.reply(`L'aide vous a été envoyé en privé !`)
+}
+if (message.content === '!membercount') {
+  let nrole = message.guild.members.filter(m=>m.roles.has('467237426046435328'))
+  let MEmbed = new Discord.RichEmbed()
+.setDescription("__**Member Count**__")
+  .setColor("#3f168a")
+  .setThumbnail(message.guild.iconURL)
+.addField("Utilisateurs total", message.guild.memberCount)
+.addField("Humains", message.guild.memberCount - message.guild.members.filter(m=>m.user.bot).size)
+.addField("Bots", message.guild.members.filter(m=>m.user.bot).size)
+.addField("Membres SunLight", nrole.size)
+.addField("Pseudo membres SunLight", nrole.map(m=>m.displayName))
+return message.channel.send(MEmbed)
 }
     let args = message.content.split(' ');
     let mUser = message.guild.member(message.mentions.users.first());
@@ -238,8 +252,6 @@ bot.on('messageReactionAdd', async (reaction, user)=>{
       if (reaction.emoji.name === '🔔') {
         reaction.message.guild.members.get(user.id).addRole('467712226837528577')
         user.send('Vous avez activé les notifs du serveur de la **SunLight** !')
-      } else {
-        reaction.remove(user)
       }
     }
     }
@@ -250,8 +262,6 @@ bot.on('messageReactionRemove', async (reaction, user)=>{
       if (reaction.emoji.name === '🔔') {
         reaction.message.guild.members.get(user.id).removeRole('467712226837528577')
         user.send('Vous avez desactivé les notifs du serveur de la **SunLight** !')
-      } else {
-        reaction.remove(user)
       }
     }
     }
