@@ -201,3 +201,58 @@ if (message.content === prefix + 'help') {
         mUser.removeRole(grole.id)
     }
 });
+
+
+
+// NOTIF
+
+const events = {
+  MESSAGE_REACTION_ADD: 'messageReactionAdd',
+  MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
+};
+
+bot.on('raw', async event => {
+  if (!events.hasOwnProperty(event.t)) return;
+
+  const { d: data } = event;
+  const user = bot.users.get(data.user_id);
+  const channel = bot.channels.get(data.channel_id) || await user.createDM();
+
+  if (channel.messages.has(data.message_id)) return;
+
+  const message = await channel.fetchMessage(data.message_id);
+  const emojiKey = (data.emoji.id) ? `${data.emoji.name}:${data.emoji.id}` : data.emoji.name;
+  let reaction = message.reactions.get(emojiKey);
+
+  if (!reaction) {
+    const emoji = new Discord.Emoji(bot.guilds.get(data.guild_id), data.emoji);
+    reaction = new Discord.MessageReaction(message, emoji, 1, data.user_id === bot.user.id);
+  }
+
+  bot.emit(events[event.t], reaction, user);
+});
+bot.on('messageReactionAdd', async (reaction, user)=>{
+    if (reaction.message.content.startsWith('[NOTIF]')) {
+    if (reaction.message.member.hasPermission('ADMINISTRATOR')) {
+      reaction.message.react('🔔')
+      if (reaction.emoji.name === '🔔') {
+        reaction.message.guild.members.get(user.id).addRole('467712226837528577')
+        user.send('Vous avez activé les notifs du serveur de la **SunLight** !')
+      } else {
+        reaction.remove(user)
+      }
+    }
+    }
+});
+bot.on('messageReactionRemove', async (reaction, user)=>{
+  if (reaction.message.content.startsWith('[NOTIF]')) {
+    if (reaction.message.member.hasPermission('ADMINISTRATOR')) {
+      if (reaction.emoji.name === '🔔') {
+        reaction.message.guild.members.get(user.id).removeRole('467712226837528577')
+        user.send('Vous avez desactivé les notifs du serveur de la **SunLight** !')
+      } else {
+        reaction.remove(user)
+      }
+    }
+    }
+});
