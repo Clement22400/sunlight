@@ -252,7 +252,9 @@ bot.on('messageReactionAdd', async (reaction, user)=>{
       if (reaction.emoji.name === '🔔') {
         reaction.message.guild.members.get(user.id).addRole('467712226837528577')
         user.send('Vous avez activé les notifs du serveur de la **SunLight** !')
-      }
+      } else{  
+    reaction.remove(user)
+}
     }
     }
 });
@@ -262,7 +264,9 @@ bot.on('messageReactionRemove', async (reaction, user)=>{
       if (reaction.emoji.name === '🔔') {
         reaction.message.guild.members.get(user.id).removeRole('467712226837528577')
         user.send('Vous avez desactivé les notifs du serveur de la **SunLight** !')
-      }
+      } else {
+    reaction.remove(user)
+}
     }
     }
 });
