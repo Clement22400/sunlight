@@ -3,7 +3,7 @@ const bot = new Discord.Client()
 var prefix = '!'
 const speak = new Set();
 const kickspeak = new Set();
-bot.login(process.env.TOKENd)
+bot.login(process.env.TOKEN)
 bot.on('ready', function() {
 console.log('Je suis prêt ! #SunLight')
 bot.user.setActivity('!help | SunLight')
