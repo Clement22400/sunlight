@@ -246,27 +246,32 @@ bot.on('raw', async event => {
   bot.emit(events[event.t], reaction, user);
 });
 bot.on('messageReactionAdd', async (reaction, user)=>{
-    if (reaction.message.id === '467719049254797313') {
-    if (reaction.message.member.hasPermission('ADMINISTRATOR')) {
+    if (reaction.message.id === '469267126042099722') {
       reaction.message.react('🔔')
+      reaction.message.react('🐦')
       if (reaction.emoji.name === '🔔') {
         reaction.message.guild.members.get(user.id).addRole('467712226837528577')
         user.send('Vous avez activé les notifs du serveur de la **SunLight** !')
-      } else{  
-    reaction.remove(user)
-}
-    }
+      }
+      else if (reaction.emoji.name === '🐦') {
+        reaction.message.guild.members.get(user.id).addRole('468914868854980608')
+        user.send('Vous avez activé les notifs twitter du serveur de la **SunLight** !')
+      } else {
+        reaction.remove(user)
+      }
     }
 });
 bot.on('messageReactionRemove', async (reaction, user)=>{
-  if (reaction.message.id === '467719049254797313') {
-    if (reaction.message.member.hasPermission('ADMINISTRATOR')) {
+  if (reaction.message.id === '469267126042099722') {
       if (reaction.emoji.name === '🔔') {
         reaction.message.guild.members.get(user.id).removeRole('467712226837528577')
         user.send('Vous avez desactivé les notifs du serveur de la **SunLight** !')
+      }
+      if (reaction.emoji.name === '🐦') {
+        reaction.message.guild.members.get(user.id).removeRole('468914868854980608')
+        user.send('Vous avez desactivé les notifs twitter du serveur de la **SunLight** !')
       } else {
-    reaction.remove(user)
-}
-    }
+        reaction.remove(user)
+      }
     }
 });
