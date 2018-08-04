@@ -50,6 +50,7 @@ bot.on('message', async message =>{
     }
   }
 if (message.content.includes('https://discord.gg/')) {
+    if (message.member.hasPermission('ADMINISTRATOR')) return;
   if (message.channel.id === '467241067800952832') return;
   message.delete()
   message.reply('Les invitation discord sont autorisé seulement dans <#467241067800952832> !').then((message)=>{
