@@ -9,18 +9,18 @@ console.log('Je suis prêt ! #SunLight')
 bot.user.setActivity('!help | SunLight')
 });
 bot.on('guildMemberAdd', function (member) {
-member.addRole('467231547490172932')
+member.addRole('476327470984069120')
 member.createDM().then(function(channel){
     channel.send('Bienvenue à toi sur le serveur de la SunLight !');
 });
-member.guild.channels.find(c=>c.name.includes('bienvenue')).send(`Bienvenue à ${member} sur le serveur de la SunLight, tu peux parler dans <#467240899034742784> et faire une candidature avec le lien dans <#467238523301527553> mais avant n'oublie pas de lire les règles <#467233011826688001> !`);
+member.guild.channels.find(c=>c.name.includes('join-leave')).send(`Bienvenue à ${member} sur le serveur de la SunLight, tu peux parler dans <#467240899034742784> et faire une candidature avec le lien dans <#467238523301527553> mais avant n'oublie pas de lire les règles <#467233011826688001> !`);
 });
 bot.on('guildMemberRemove', function (member) {
     member.guild.channels.find(c=>c.name.includes('bienvenue')).send(`Au revoir ${member.displayName} sur le serveur de la SunLight.`);
 });
 bot.on('message', async message =>{
   function fkick() {
-    message.author.send('Vous avez été expulsé pour spam sur le serveur **SunLight**, voici le lien pour revenir : https://discord.gg/tCJZv2h !')
+    await message.author.send('Vous avez été expulsé pour spam sur le serveur **SunLight**, voici le lien pour revenir : https://discord.gg/tCJZv2h !')
     message.member.kick('Auto KICK Raison : Spam')
   }
   if (message.author.bot) return;
@@ -247,30 +247,21 @@ bot.on('raw', async event => {
   bot.emit(events[event.t], reaction, user);
 });
 bot.on('messageReactionAdd', async (reaction, user)=>{
-    if (reaction.message.id === '469267126042099722') {
+    if (reaction.message.id === '476350327805968394') {
       reaction.message.react('🔔')
-      reaction.message.react('🐦')
       if (reaction.emoji.name === '🔔') {
-        reaction.message.guild.members.get(user.id).addRole('467712226837528577')
+        reaction.message.guild.members.get(user.id).addRole('476350403420880916')
         user.send('Vous avez activé les notifs du serveur de la **SunLight** !')
-      }
-      else if (reaction.emoji.name === '🐦') {
-        reaction.message.guild.members.get(user.id).addRole('468914868854980608')
-        user.send('Vous avez activé les notifs twitter du serveur de la **SunLight** !')
       } else {
         reaction.remove(user)
       }
     }
 });
 bot.on('messageReactionRemove', async (reaction, user)=>{
-  if (reaction.message.id === '469267126042099722') {
+  if (reaction.message.id === '476350327805968394') {
       if (reaction.emoji.name === '🔔') {
-        reaction.message.guild.members.get(user.id).removeRole('467712226837528577')
+        reaction.message.guild.members.get(user.id).removeRole('476350403420880916')
         user.send('Vous avez desactivé les notifs du serveur de la **SunLight** !')
-      }
-      if (reaction.emoji.name === '🐦') {
-        reaction.message.guild.members.get(user.id).removeRole('468914868854980608')
-        user.send('Vous avez desactivé les notifs twitter du serveur de la **SunLight** !')
       } else {
         reaction.remove(user)
       }
