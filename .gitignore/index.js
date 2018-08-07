@@ -85,7 +85,7 @@ if (message.content === prefix + 'help') {
     message.reply(`L'aide vous a été envoyé en privé !`)
 }
 if (message.content === '!membercount') {
-  let nrole = message.guild.members.filter(m=>m.roles.has('467237426046435328'))
+  let nrole = message.guild.members.filter(m=>m.roles.has('476327924513898507'))
   let MEmbed = new Discord.RichEmbed()
 .setDescription("__**Member Count**__")
   .setColor("#3f168a")
