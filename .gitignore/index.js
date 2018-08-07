@@ -19,7 +19,7 @@ bot.on('guildMemberRemove', function (member) {
     member.guild.channels.find(c=>c.name.includes('bienvenue')).send(`Au revoir ${member.displayName} sur le serveur de la SunLight.`);
 });
 bot.on('message', async message =>{
-  function async fkick() {
+  async function fkick() {
     await message.author.send('Vous avez été expulsé pour spam sur le serveur **SunLight**, voici le lien pour revenir : https://discord.gg/tCJZv2h !')
     message.member.kick('Auto KICK Raison : Spam')
   }
