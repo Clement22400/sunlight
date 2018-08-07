@@ -13,7 +13,7 @@ member.addRole('476327470984069120')
 member.createDM().then(function(channel){
     channel.send('Bienvenue à toi sur le serveur de la SunLight !');
 });
-member.guild.channels.find(c=>c.name.includes('join-leave')).send(`Bienvenue à ${member} sur le serveur de la SunLight, tu peux parler dans <#467240899034742784> et faire une candidature avec le lien dans <#467238523301527553> mais avant n'oublie pas de lire les règles <#467233011826688001> !`);
+member.guild.channels.find(c=>c.name.includes('join-leave')).send(`Bienvenue à ${member} sur le serveur de la SunLight, tu peux parler dans <#476334165437054986> et faire une candidature avec le lien dans <#476363102372364299> !`);
 });
 bot.on('guildMemberRemove', function (member) {
     member.guild.channels.find(c=>c.name.includes('bienvenue')).send(`Au revoir ${member.displayName} sur le serveur de la SunLight.`);
